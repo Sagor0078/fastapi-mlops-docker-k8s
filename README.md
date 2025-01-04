@@ -1,5 +1,10 @@
 # Deploying ML models using FastAPI and Docker
 
+## Application View
+
+[![Directory docs](img/backend_view.png)](https://github.com/Sagor0078/fastapi-mlops-docker-k8s)
+
+
 
 ## Dataset
 
@@ -235,7 +240,7 @@ To use a docker image without uploading it, you can follow these steps:
 - **Important note**: You have to run eval `$(minikube docker-env)` on each terminal you want to use, since it only sets the environment variables for the current shell session.
 
 #### Creating deployment
-We will now create the deployment for our application. Please open `yaml/deployment.yaml` to see the spec for this object. You will see that it starts up one replica, uses `localhost:5000/ml_fastapi_docker:latest` as the container image and defines environment variables via the `envFrom` tag. It also exposes port `8000` of the container because we will be sending HTTP requests to it later on. It also defines cpu and memory limits and mounts the volume from the Minikube VM to the container.
+We will now create the deployment for our application. Please open `yaml/deployment.yaml` to see the spec for this object. You will see that it starts up one replica, uses `localhost:5000/fastapi-mlops-docker-k8s:latest` as the container image and defines environment variables via the `envFrom` tag. It also exposes port `8000` of the container because we will be sending HTTP requests to it later on. It also defines cpu and memory limits and mounts the volume from the Minikube VM to the container.
 
 As before, we can apply this file to create the object:
 
