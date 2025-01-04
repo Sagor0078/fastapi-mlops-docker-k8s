@@ -1,4 +1,4 @@
-# Deploying ML models using FastAPI and Docker
+# Deploying ML models using FastAPI, Docker and k8s
 
 ## Application View
 
@@ -40,10 +40,10 @@ j) fractal dimension ("coastline approximation" - 1)
 https://github.com/Sagor0078/fastapi-mlops-docker-k8s
 cd fastapi-mlops-docker-k8s
 ```
-2. Create the virtual environment - Run the following command in the terminal to create a virtual environment named .env:
+2. Create the virtual environment - Run the following command in the terminal to create a virtual environment named env:
 
 ```bash
-python3 -m venv .env
+python3 -m venv env
 ```
 
 3. Activate the virtual environment - Activate the virtual environment using the following command:
@@ -422,7 +422,7 @@ If it's showing `Unknown` instead of `0%` in the `TARGETS` column, you can try s
 
 ### Stress Test
 
-To test the autoscaling capability of our deployment, I provided a short bash script (`request.sh`) that will just persistently send requests to our application. Please open a new terminal window, make sure that you're in the root directory of this README file, then run this command (for Linux and Mac):
+To test the autoscaling capability of our deployment, I provided a short bash script (`request.sh`) that will just persistently send requests to our application. Please open a new terminal window, make sure that you're in the root directory of this README file, then run this command (for Linux and Mac) (alternatives we can use Locust for stress test):
 
 ```bash
 /bin/bash request.sh
