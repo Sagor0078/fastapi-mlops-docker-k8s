@@ -32,20 +32,22 @@ j) fractal dimension ("coastline approximation" - 1)
 
 1. Clone the repository, and navigate to the downloaded folder.
 ```
-git clone https://github.com/iamirmasoud/fastapi_ml_docker
-cd fastapi_ml_docker
+https://github.com/Sagor0078/fastapi-mlops-docker-k8s
+cd fastapi-mlops-docker-k8s
+```
+2. Create the virtual environment - Run the following command in the terminal to create a virtual environment named .env:
+
+```bash
+python3 -m venv .env
 ```
 
-2. Create (and activate) a new environment, named `fastapi_ml` with Python 3.7. If prompted to proceed with the install `(Proceed [y]/n)` type y.
+3. Activate the virtual environment - Activate the virtual environment using the following command:
 
-	```shell
-	conda create -n fastapi_ml python=3.7
-	source activate fastapi_ml
-	```
-	
-	At this point your command line should look something like: `(fastapi_ml) <User>:fastapi_ml_docker <user>$`. The `(fastapi_ml)` indicates that your environment has been activated, and you can proceed with further package installations.
+```bash
+source env/bin/activate
+```
+4. Install dependencies - Install the required dependencies using the pip install command:
 
-3. Before you can experiment with the code, you'll have to make sure that you have all the libraries and dependencies required to support this project. You can install dependencies using:
 ```bash
 pip install -r requirements.txt
 ```
