@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mlserving-configs
+data:
+  MODEL_NAME: breast_model
+  MODEL_PATH: /model/model_binary.dat.gz

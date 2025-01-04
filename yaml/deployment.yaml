@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-serving-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-serving
+  template:
+    metadata:
+      labels:
+        app: ml-serving
+    spec:
+      containers:
+      - name: ml-serving
+        image: ml_fastapi_docker
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: mlserving-configs
+        env:
+        - name: CELERY_BROKER_URL
+          value: redis://redis:6379/0
+        - name: CELERY_RESULT_BACKEND
+          value: redis://redis:6379/0
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: ml-serving-volume
+          mountPath: /app/model
+#        resources:
+#          requests:
+#            memory: 32Mi
+#            cpu: 400m
+#          limits:
+#            memory: 64Mi
+#            cpu: 10m
+
+      - name: celery-worker
+        image: ml_fastapi_docker
+        imagePullPolicy: Never
+        command: ["celery", "-A", "celery_app", "worker", "--loglevel=info"]
+        env:
+        - name: CELERY_BROKER_URL
+          value: redis://redis:6379/0
+        - name: CELERY_RESULT_BACKEND
+          value: redis://redis:6379/0
+        volumeMounts:
+        - name: ml-serving-volume
+          mountPath: /app/model
+
+      volumes:
+      - name: ml-serving-volume
+        hostPath:
+          path: /var/tmp/model

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  breast_prediction:
+    image: ml_fastapi_docker
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/tmp/model:/app/model
+    container_name: ml_fastapi_service
