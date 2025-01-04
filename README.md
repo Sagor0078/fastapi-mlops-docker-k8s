@@ -1,4 +1,4 @@
-# Deploying ML models using FastAPI, Docker and k8s
+# Deploying ML models using FastAPI and Docker
 
 ## Application View
 
