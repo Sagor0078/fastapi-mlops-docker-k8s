@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing_extensions import Literal
 from fastapi import FastAPI, BackgroundTasks
-
+from celery_app import celery_app
 from celery.result import AsyncResult
 
 model_name = "Breast Cancer Wisconsin (Diagnostic)"
@@ -29,8 +29,6 @@ class BreastData(BaseModel):
 
 class BreastPrediction(BaseModel):
     label: Literal["M", "B"]
-
-from celery_app import celery_app
 
 @app.post("/predict")
 async def predict(data: BreastData, background_tasks: BackgroundTasks):

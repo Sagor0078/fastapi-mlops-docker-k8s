@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing_extensions import Literal
 
 from utils import app
-from utils.functions import get_model_response
+from core.utils import get_model_response
 
 model_name = "Breast Cancer Wisconsin (Diagnostic)"
 version = "v1.0.0"
