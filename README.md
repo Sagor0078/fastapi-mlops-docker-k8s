@@ -71,7 +71,7 @@ python core/train.py
 Finally, we can test our web application by running:
 
 ```bash
-fastapi dev core/main:app
+fastapi dev core/main.py
 ```
 
 ## Docker
