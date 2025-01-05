@@ -63,7 +63,7 @@ pip install -r requirements.txt
 After installing all the dependencies we can now run the script in code/train.py, this script takes the input data and outputs a trained model and a pipeline for our web service.
 
 ```bash
-python code/train.py
+python core/train.py
 ```
 
 ## Web application
@@ -71,7 +71,7 @@ python code/train.py
 Finally, we can test our web application by running:
 
 ```bash
-uvicorn main:app
+fastapi dev core/main:app
 ```
 
 ## Docker
@@ -105,7 +105,7 @@ docker-compose up
 
 ## Test!
 
-Run the following commands in terminal or run the `tests/client.py` script:
+Run the following commands in terminal or run the `core/test.py` script:
 
 
 ```bash
@@ -202,7 +202,7 @@ It basically starts up the model server and uses the environment variables `MODE
 We can create the object now using `kubectl` as shown below. Notice the `-f` flag to specify a filename. We can also specify a directory but we'll do that later.
 
 ```bash
-kubectl apply -f yaml/configmap.yaml
+kubectl apply -f infra/configmap.yaml
 ```
 
 With that, you should be able to `get` and `describe` the object as before. For instance, `kubectl describe cm mlserving-configs` should show you:
@@ -240,12 +240,12 @@ To use a docker image without uploading it, you can follow these steps:
 - **Important note**: You have to run eval `$(minikube docker-env)` on each terminal you want to use, since it only sets the environment variables for the current shell session.
 
 #### Creating deployment
-We will now create the deployment for our application. Please open `yaml/deployment.yaml` to see the spec for this object. You will see that it starts up one replica, uses `localhost:5000/fastapi-mlops-docker-k8s:latest` as the container image and defines environment variables via the `envFrom` tag. It also exposes port `8000` of the container because we will be sending HTTP requests to it later on. It also defines cpu and memory limits and mounts the volume from the Minikube VM to the container.
+We will now create the deployment for our application. Please open `infra/deployment.yaml` to see the spec for this object. You will see that it starts up one replica, uses `localhost:5000/fastapi-mlops-docker-k8s:latest` as the container image and defines environment variables via the `envFrom` tag. It also exposes port `8000` of the container because we will be sending HTTP requests to it later on. It also defines cpu and memory limits and mounts the volume from the Minikube VM to the container.
 
 As before, we can apply this file to create the object:
 
 ```bash
-kubectl apply -f yaml/deployment.yaml
+kubectl apply -f infra/deployment.yaml
 ```
 
 Running `kubectl get deploy` after around 90 seconds should show you something like below to tell you that the deployment is ready.
@@ -272,7 +272,7 @@ This project uses Celery for background task processing and Redis as the message
 First, ensure that Redis is running. You can use the provided Kubernetes deployment configuration to set up Redis:
 
 ```bash
-kubectl apply -f yaml/redis-deployment.yaml
+kubectl apply -f infra/redis-deployment.yaml
 ```
 
 Verify that the Redis service is running:
@@ -330,9 +330,9 @@ In the `app.py` file, Celery tasks are used for background processing. Here is a
 
 We will need to create a service so our application can be accessible outside the cluster. I've included `yaml/service.yaml` for that. It defines a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) service which exposes the node's port `30001`. Requests sent to this port will be sent to the containers' specified `targetPort` which is `8000`. 
 
-Apply `yaml/service.yaml`:
+Apply `infra/service.yaml`:
 ```bash
-kubectl apply -f yaml/service.yaml
+kubectl apply -f infra/service.yaml
 ```
 and run 
 ```bash
@@ -404,9 +404,9 @@ NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           76s
 ```
 
-With that, we can now create our autoscaler by applying `yaml/autoscale.yaml`:
+With that, we can now create our autoscaler by applying `infra/autoscale.yaml`:
 ```bash
-kubectl apply -f yaml/autoscale.yaml
+kubectl apply -f infra/autoscale.yaml
 ```
 
 Please wait for about a minute, so it can query the metrics server. Running `kubectl get hpa` should show: 
@@ -465,7 +465,7 @@ deployment.apps "ml-serving-deployment" deleted
 service "ml-serving-service" deleted
 ```
 
-We can then re-create them all next time with one command by running `kubectl apply -f yaml`. Just remember to check if `metrics-server` is enabled and running.
+We can then re-create them all next time with one command by running `kubectl apply -f infra`. Just remember to check if `metrics-server` is enabled and running.
 
 If we also want to destroy the VM, then we can run `minikube delete`. 
 

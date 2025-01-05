@@ -1,4 +1,4 @@
-from celery import Celery
+from core.celery import Celery
 
 # Create a Celery instance
 celery_app = Celery(

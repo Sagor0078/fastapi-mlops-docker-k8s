@@ -1,5 +1,5 @@
-from celery import Celery
-from utils.functions import get_model_response
+from core.celery import Celery
+from core.utils import get_model_response
 
 celery_app = Celery('tasks', broker='redis://localhost:6379/0')
 
