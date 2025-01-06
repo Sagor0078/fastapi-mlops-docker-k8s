@@ -456,7 +456,7 @@ We can now stop the `request.sh` script by pressing `Ctrl/Cmd + C`. Unlike scali
 
 ### Tear Down
 
-After we're done experimenting, we can destroy the resources we created. We can simply call `kubectl delete -f yaml` to delete all resources defined in the `yaml` folder. You should see something like this:
+After we're done experimenting, we can destroy the resources we created. We can simply call `kubectl delete -f infra` to delete all resources defined in the `infra` folder. You should see something like this:
 
 ```
 horizontalpodautoscaler.autoscaling "ml-serving-hpa" deleted
