@@ -1,6 +1,5 @@
 import pandas as pd
-
-from utils import model
+import model
 
 
 def predict(X, classifier):

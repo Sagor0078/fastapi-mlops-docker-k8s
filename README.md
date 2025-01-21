@@ -126,7 +126,7 @@ curl -H "Content-Type: application/json" -d '{
 }' -XPOST http://0.0.0.0:8000/predict
 ```
 
-# Bonus Section: Deploying on Kubernetes
+# Deploying on Kubernetes
 
 * setup Kubernetes in our local machine for learning and development
 * create Kubernetes objects using YAML files
